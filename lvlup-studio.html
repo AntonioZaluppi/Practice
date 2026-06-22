@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LVL UP Studio — студия веб-разработки</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --accent:#2f6bff; --accent-ink:#1e4fd0; --accent-soft:#eaf0ff;
+  --ink:#14161c; --text:#4a4f5c; --muted:#8a90a0;
+  --bg:#ffffff; --surface:#f5f7fa; --surface-2:#eef1f6; --border:#e6e9ef;
+  --green:#16a34a;
+  --r:16px; --r-sm:10px; --r-lg:22px;
+  --container:1180px;
+  --shadow:0 1px 2px rgba(20,22,28,.04), 0 12px 30px -18px rgba(20,22,28,.18);
+  --font:"Manrope","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.55;-webkit-font-smoothing:antialiased;font-size:16px;}
+h1,h2,h3,h4{color:var(--ink);line-height:1.12;margin:0;font-weight:800;letter-spacing:-.02em;}
+p{margin:0;}
+a{color:inherit;text-decoration:none;}
+img{max-width:100%;display:block;}
+.container{max-width:var(--container);margin:0 auto;padding:0 24px;}
+.accent{color:var(--accent);}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px;}
+
+/* ---------- buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;border-radius:12px;padding:13px 22px;border:1px solid transparent;cursor:pointer;transition:transform .12s ease, background .15s ease, border-color .15s ease;font-family:inherit;white-space:nowrap;}
+.btn:active{transform:translateY(1px);}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:var(--accent-ink);}
+.btn-ghost{background:var(--surface-2);color:var(--ink);}
+.btn-ghost:hover{background:#e4e8f0;}
+.btn-outline{background:#fff;color:var(--ink);border-color:var(--border);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+.btn .arr{font-size:13px;opacity:.8;}
+
+/* ---------- header ---------- */
+.site-header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.85);backdrop-filter:saturate(160%) blur(12px);border-bottom:1px solid var(--border);}
+.nav{display:flex;align-items:center;gap:28px;height:72px;}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;color:var(--ink);letter-spacing:-.02em;}
+.logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(150deg,var(--accent),#5b8bff);display:grid;place-items:center;box-shadow:0 6px 16px -6px rgba(47,107,255,.7);}
+.logo-mark svg{width:18px;height:18px;}
+.brand b{font-size:16px;line-height:1;}
+.brand span{display:block;font-size:11px;color:var(--muted);font-weight:600;margin-top:2px;}
+.nav-links{display:flex;gap:6px;margin-left:14px;}
+.nav-links a{padding:9px 14px;border-radius:10px;font-weight:600;font-size:15px;color:var(--text);transition:background .15s,color .15s;cursor:pointer;}
+.nav-links a:hover{background:var(--surface);color:var(--ink);}
+.nav-links a.active{background:var(--surface-2);color:var(--ink);}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--border);border-radius:11px;background:#fff;cursor:pointer;}
+.burger span,.burger span::before,.burger span::after{content:"";position:absolute;width:18px;height:2px;background:var(--ink);border-radius:2px;left:13px;transition:.2s;}
+.burger span{top:21px;}.burger span::before{top:-6px;}.burger span::after{top:6px;}
+
+/* ---------- pages ---------- */
+.page{display:none;}
+.page.active{display:block;animation:fade .25s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+
+/* ---------- section scaffolding ---------- */
+.section{padding:74px 0;}
+.section.tight{padding:54px 0;}
+.section.alt{background:var(--surface);}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);}
+.eyebrow .num{color:var(--muted);}
+.sec-head{max-width:720px;margin-bottom:34px;}
+.sec-head h2{font-size:clamp(28px,3.4vw,40px);margin:14px 0 12px;}
+.sec-head p{color:var(--text);font-size:17px;}
+.sec-head.row{max-width:none;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;}
+
+/* ---------- placeholders ---------- */
+.ph{position:relative;background:
+   repeating-linear-gradient(45deg,#eef1f6 0 12px,#e9edf4 12px 24px);
+   border:1px dashed #c9d0de;border-radius:var(--r);display:grid;place-items:center;color:#9aa2b4;overflow:hidden;}
+.ph .ph-in{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12.5px;font-weight:600;letter-spacing:.02em;padding:10px;text-align:center;}
+.ph svg{width:26px;height:26px;opacity:.7;}
+.ph.solid{background:var(--surface-2);border-style:solid;border-color:var(--border);}
+
+/* ---------- hero (home) ---------- */
+.hero{padding:64px 0 16px;}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;}
+.hero h1{font-size:clamp(34px,5vw,58px);margin:18px 0 18px;}
+.hero .lead{font-size:18px;max-width:520px;margin-bottom:26px;}
+.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:26px;}
+.hero-meta{display:flex;gap:26px;align-items:center;}
+.hero-meta .m b{font-size:22px;color:var(--ink);font-weight:800;}
+.hero-meta .m span{font-size:13px;color:var(--muted);}
+.hero-meta .divider{width:1px;height:34px;background:var(--border);}
+.mock{position:relative;background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow);padding:14px;}
+.mock-bar{display:flex;gap:6px;margin-bottom:12px;}
+.mock-bar i{width:11px;height:11px;border-radius:50%;background:#e2e6ee;}
+.mock .ph{height:230px;}
+.float-chip{position:absolute;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:10px 14px;font-weight:700;color:var(--ink);font-size:14px;}
+.float-chip span{display:block;font-size:11px;color:var(--muted);font-weight:600;}
+.float-chip.tl{top:-16px;right:24px;}
+.float-chip.bl{bottom:-18px;left:18px;color:var(--accent);}
+
+/* ---------- dark stats ---------- */
+.stats-dark{background:var(--ink);border-radius:var(--r-lg);color:#fff;padding:36px 20px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:38px;}
+.stats-dark .s b{font-size:clamp(26px,3.6vw,40px);font-weight:800;display:block;letter-spacing:-.03em;}
+.stats-dark .s span{color:#aeb6c6;font-size:13.5px;}
+
+/* ---------- light stats row ---------- */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:30px 0;}
+.stats-row .s b{font-size:30px;font-weight:800;color:var(--ink);display:block;letter-spacing:-.03em;}
+.stats-row .s span{font-size:13.5px;color:var(--muted);}
+
+/* ---------- grids & cards ---------- */
+.grid{display:grid;gap:22px;}
+.g3{grid-template-columns:repeat(3,1fr);}
+.g2{grid-template-columns:repeat(2,1fr);}
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px;transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;}
+.card.hover:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:#d8deea;}
+.card h3{font-size:19px;margin-bottom:8px;}
+.card .ico{width:46px;height:46px;border-radius:12px;background:var(--accent-soft);display:grid;place-items:center;margin-bottom:14px;color:var(--accent);}
+.card .ico svg{width:22px;height:22px;}
+.channel .ic svg,.svc .badge svg,.opt .oi svg{width:22px;height:22px;}
+.socials a svg{width:17px;height:17px;}
+.btn svg{width:17px;height:17px;}
+.card .desc{color:var(--text);font-size:15px;}
+.linklike{color:var(--accent);font-weight:700;font-size:15px;display:inline-flex;gap:6px;align-items:center;cursor:pointer;}
+
+/* tech cards */
+.tech .card{background:var(--surface);border-color:transparent;}
+.tech .card:nth-child(2){background:#fff5ee;}
+.tech .card:nth-child(3){background:#eefaf0;}
+.tags{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0;}
+.tag{background:#fff;border:1px solid var(--border);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600;color:var(--ink);}
+
+/* process steps */
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+.step .n{width:38px;height:38px;border-radius:11px;background:var(--ink);color:#fff;font-weight:800;display:grid;place-items:center;margin-bottom:14px;}
+.step h4{font-size:16px;margin-bottom:6px;}
+.step p{font-size:14px;color:var(--text);}
+
+/* advantages */
+.adv{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.adv .a .n{font-size:13px;font-weight:800;color:var(--accent);letter-spacing:.08em;}
+.adv .a h4{font-size:17px;margin:8px 0 6px;}
+.adv .a p{font-size:14.5px;color:var(--text);}
+
+/* reviews */
+.review .quote{font-size:15px;color:var(--text);}
+.review .site{color:var(--accent);font-weight:700;font-size:13.5px;display:inline-flex;gap:6px;align-items:center;margin-bottom:12px;}
+.review .who{display:flex;align-items:center;gap:12px;margin-top:18px;}
+.review .who .av{width:42px;height:42px;border-radius:50%;flex:none;}
+.review .who b{display:block;color:var(--ink);font-size:14.5px;}
+.review .who span{font-size:12.5px;color:var(--muted);}
+
+/* faq */
+.faq{max-width:820px;}
+.faq-item{border:1px solid var(--border);border-radius:14px;background:#fff;margin-bottom:12px;overflow:hidden;}
+.faq-q{width:100%;text-align:left;background:none;border:0;padding:18px 22px;font-weight:700;color:var(--ink);font-size:16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;font-family:inherit;}
+.faq-q .pm{flex:none;width:24px;height:24px;border-radius:7px;background:var(--surface-2);display:grid;place-items:center;transition:.2s;color:var(--accent);font-size:18px;}
+.faq-item.open .pm{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+.faq-a p{padding:0 22px 18px;color:var(--text);font-size:15px;}
+
+/* cta band */
+.cta-band{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:30px 34px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.cta-band h3{font-size:22px;margin-bottom:6px;}
+.cta-band p{color:var(--text);font-size:15px;max-width:640px;}
+
+/* filters */
+.filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:26px;}
+.chip{border:1px solid var(--border);background:#fff;border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px;color:var(--text);cursor:pointer;display:inline-flex;gap:8px;align-items:center;font-family:inherit;transition:.15s;}
+.chip .c{background:var(--surface-2);border-radius:999px;padding:1px 8px;font-size:12px;color:var(--muted);}
+.chip:hover{border-color:#cfd6e4;}
+.chip.active{background:var(--ink);color:#fff;border-color:var(--ink);}
+.chip.active .c{background:rgba(255,255,255,.18);color:#fff;}
+
+/* service cards */
+.svc .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.svc .cat{font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--muted);}
+.svc .badge{width:42px;height:42px;border-radius:11px;background:var(--surface);display:grid;place-items:center;color:var(--accent);}
+.svc.t-design .badge{background:#eefaf0;color:#16a34a;}
+.svc.t-complex .badge{background:#fff5ee;color:#d97706;}
+.svc.t-support .badge{background:#fef3c7;color:#b45309;}
+.svc.t-revision .badge{background:#f3e8ff;color:#7c3aed;}
+.svc ul{list-style:none;padding:0;margin:14px 0 18px;display:grid;gap:8px;}
+.svc li{font-size:14px;color:var(--text);display:flex;gap:9px;align-items:flex-start;}
+.svc li svg{flex:none;width:17px;height:17px;color:var(--green);margin-top:2px;}
+.svc .price{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--border);padding-top:14px;}
+.svc .price b{font-size:18px;color:var(--ink);}
+.svc .price span{font-size:13.5px;color:var(--accent);font-weight:600;}
+
+/* project rows */
+.proj{display:grid;grid-template-columns:200px 1fr auto;gap:22px;align-items:center;}
+.proj .thumb{width:200px;height:128px;border-radius:12px;}
+.proj .cat{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--muted);}
+.proj h3{font-size:19px;margin:6px 0 6px;}
+.proj .desc{font-size:14.5px;color:var(--text);margin-bottom:10px;}
+.proj .price{text-align:right;}
+.proj .price b{font-size:20px;color:var(--ink);display:block;}
+.proj .price span{font-size:13.5px;color:var(--accent);font-weight:600;}
+
+/* contacts */
+.channels{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.channel{display:flex;gap:14px;align-items:flex-start;border:1px solid var(--border);border-radius:14px;padding:18px;background:#fff;}
+.channel .ic{width:42px;height:42px;border-radius:11px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;flex:none;}
+.channel .k{font-size:11.5px;font-weight:800;letter-spacing:.1em;color:var(--muted);}
+.channel b{display:block;color:var(--ink);font-size:16px;margin:3px 0;}
+.channel small{color:var(--muted);font-size:13px;}
+.map .ph{height:340px;}
+.team-card{text-align:left;}
+.team-card .av{width:54px;height:54px;border-radius:50%;margin-bottom:14px;}
+.team-card h4{font-size:16px;}
+.team-card .role{color:var(--accent);font-weight:600;font-size:13.5px;margin-bottom:10px;}
+.team-card p{font-size:14px;color:var(--text);}
+.socials{display:flex;gap:8px;margin-top:14px;}
+.socials a{width:34px;height:34px;border-radius:9px;background:var(--surface);display:grid;place-items:center;color:var(--muted);transition:.15s;}
+.socials a:hover{background:var(--accent-soft);color:var(--accent);}
+.req{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:26px;display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.req .f{border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.req .f .k{font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:700;text-transform:uppercase;}
+.req .f b{color:var(--ink);font-size:15px;font-weight:700;}
+
+/* forms */
+.form{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:26px;}
+.form .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--border);border-radius:11px;padding:12px 14px;font-family:inherit;font-size:15px;color:var(--ink);background:#fff;transition:border-color .15s, box-shadow .15s;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);}
+.field textarea{min-height:96px;resize:vertical;}
+.field.invalid input,.field.invalid textarea{border-color:#e23b3b;box-shadow:0 0 0 3px #fde7e7;}
+.field .err{color:#e23b3b;font-size:12.5px;margin-top:5px;display:none;}
+.field.invalid .err{display:block;}
+.types{display:flex;flex-wrap:wrap;gap:8px;}
+.types label{border:1px solid var(--border);border-radius:999px;padding:8px 14px;font-size:13.5px;cursor:pointer;color:var(--text);}
+.types input{position:absolute;opacity:0;}
+.types input:checked + span{}
+.types label:has(input:checked){background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:700;}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);margin:6px 0 16px;}
+.consent input{margin-top:3px;}
+.form-aside .perk{display:flex;gap:10px;align-items:center;font-size:14.5px;color:var(--text);margin-bottom:12px;}
+.form-aside .perk svg{color:var(--green);width:18px;height:18px;flex:none;}
+.form-ok{display:none;background:#eafaef;border:1px solid #b6e6c4;color:#15803d;border-radius:12px;padding:14px 16px;font-weight:600;font-size:14.5px;margin-bottom:14px;}
+.contact-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:36px;align-items:start;}
+
+/* ---------- constructor ---------- */
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.howto .h .n{font-size:13px;font-weight:800;color:var(--accent);letter-spacing:.08em;}
+.howto .h h4{font-size:17px;margin:8px 0 6px;}
+.howto .h p{font-size:14.5px;color:var(--text);}
+.presets{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px;}
+.builder{display:grid;grid-template-columns:1fr 350px;gap:26px;align-items:start;}
+.bcard{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:18px;}
+.bcard .bhead{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.bcard .bhead .bn{width:28px;height:28px;border-radius:8px;background:var(--surface-2);color:var(--ink);font-weight:800;display:grid;place-items:center;font-size:14px;flex:none;}
+.bcard .bhead h4{font-size:17px;}
+.bcard .bhead small{margin-left:auto;color:var(--muted);font-size:12.5px;}
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.opt{border:1px solid var(--border);border-radius:13px;padding:16px 14px;cursor:pointer;text-align:center;transition:.15s;position:relative;}
+.opt:hover{border-color:#cfd6e4;}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft);}
+.opt .oi{width:40px;height:40px;border-radius:11px;background:var(--surface);display:grid;place-items:center;margin:0 auto 10px;color:var(--accent);}
+.opt.sel .oi{background:#fff;}
+.opt b{display:block;color:var(--ink);font-size:14.5px;}
+.opt span{font-size:12.5px;color:var(--muted);}
+.range-wrap{display:flex;align-items:center;gap:16px;}
+.range-wrap input[type=range]{flex:1;accent-color:var(--accent);height:6px;}
+.range-val{font-weight:800;color:var(--ink);font-size:16px;min-width:128px;}
+.range-val span{color:var(--accent);font-size:13px;font-weight:600;}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.checks .group-label{grid-column:1/-1;font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--muted);margin-top:6px;}
+.check{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:11px;padding:11px 13px;cursor:pointer;transition:.15s;}
+.check:hover{border-color:#cfd6e4;}
+.check.sel{border-color:var(--accent);background:var(--accent-soft);}
+.check .box{width:20px;height:20px;border-radius:6px;border:1.5px solid var(--border);display:grid;place-items:center;flex:none;background:#fff;color:#fff;}
+.check.sel .box{background:var(--accent);border-color:var(--accent);}
+.check .box svg{width:13px;height:13px;opacity:0;}
+.check.sel .box svg{opacity:1;}
+.check .lbl{font-size:14px;color:var(--ink);font-weight:600;flex:1;}
+.check .pr{font-size:12.5px;color:var(--muted);}
+.summary{position:sticky;top:88px;background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:22px;box-shadow:var(--shadow);}
+.summary h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
+.sumline{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--border);}
+.sumline .l b{display:block;color:var(--ink);font-size:14.5px;font-weight:700;}
+.sumline .l span{font-size:12.5px;color:var(--muted);}
+.sumline .v{color:var(--ink);font-weight:700;font-size:14.5px;white-space:nowrap;}
+.sum-term{display:flex;justify-content:space-between;padding:14px 0 6px;color:var(--text);font-size:14px;}
+.sum-term b{color:var(--ink);}
+.sum-total{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0 18px;}
+.sum-total span{color:var(--ink);font-weight:700;}
+.sum-total b{color:var(--accent);font-size:26px;font-weight:800;letter-spacing:-.02em;}
+.summary .note{font-size:12px;color:var(--muted);margin-top:12px;text-align:center;}
+
+/* ---------- agreement ---------- */
+.legal{display:grid;grid-template-columns:240px 1fr;gap:40px;align-items:start;}
+.legal-nav{position:sticky;top:90px;}
+.legal-nav .lh{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:12px;}
+.legal-nav a{display:block;padding:7px 12px;border-radius:9px;font-size:14px;color:var(--text);cursor:pointer;border-left:2px solid transparent;}
+.legal-nav a:hover{background:var(--surface);color:var(--ink);}
+.legal-nav a.active{color:var(--accent);border-left-color:var(--accent);font-weight:700;}
+.legal-body h3{font-size:19px;margin:30px 0 12px;}
+.legal-body h3:first-child{margin-top:0;}
+.legal-body p{font-size:15px;color:var(--text);margin-bottom:12px;}
+.legal-body .note{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;font-size:14.5px;color:var(--text);margin:14px 0;}
+.legal-body ul{padding-left:20px;color:var(--text);font-size:15px;}
+.legal-body li{margin-bottom:6px;}
+.legal-body .divider{height:1px;background:var(--border);margin:26px 0;}
+
+/* ---------- footer ---------- */
+.site-footer{background:var(--surface);border-top:1px solid var(--border);padding:54px 0 30px;margin-top:10px;}
+.foot-grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px;}
+.foot-brand p{color:var(--text);font-size:14.5px;margin:16px 0;max-width:260px;}
+.foot-col h5{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;font-weight:800;}
+.foot-col a{display:block;color:var(--text);font-size:14.5px;padding:5px 0;cursor:pointer;}
+.foot-col a:hover{color:var(--accent);}
+.foot-bottom{display:flex;justify-content:space-between;border-top:1px solid var(--border);margin-top:40px;padding-top:22px;color:var(--muted);font-size:13.5px;}
+.foot-bottom a{cursor:pointer;}
+.foot-bottom a:hover{color:var(--accent);}
+
+/* ---------- responsive ---------- */
+@media(max-width:980px){
+  .hero-grid,.contact-grid,.builder,.legal{grid-template-columns:1fr;}
+  .g3,.tech.g3,.steps,.adv,.howto,.channels,.req,.stats-dark,.stats-row{grid-template-columns:repeat(2,1fr);}
+  .summary{position:static;}
+  .legal-nav{position:static;display:flex;flex-wrap:wrap;gap:6px;}
+  .legal-nav a{border-left:0;}
+}
+@media(max-width:680px){
+  .nav-links,.hero-meta .divider{display:none;}
+  .burger{display:block;position:relative;}
+  .nav-links.open{display:flex;position:absolute;top:72px;left:0;right:0;flex-direction:column;background:#fff;border-bottom:1px solid var(--border);padding:12px 24px;gap:2px;}
+  .section{padding:52px 0;}
+  .g3,.g2,.tech.g3,.steps,.adv,.howto,.channels,.req,.stats-row,.opts,.checks,.form .row2{grid-template-columns:1fr;}
+  .stats-dark{grid-template-columns:repeat(2,1fr);}
+  .proj{grid-template-columns:1fr;}.proj .thumb{width:100%;height:170px;}.proj .price{text-align:left;}
+  .cta-band,.sec-head.row{flex-direction:column;align-items:flex-start;}
+  .nav{gap:12px;}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" data-nav="home">
+      <span class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 5v8l-8 5-8-5V8l8-5z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 14l4-4 4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      <span><b>LVL UP</b><span>Studio</span></span>
+    </a>
+    <nav class="nav-links" id="navlinks">
+      <a data-nav="home">Главная</a>
+      <a data-nav="projects">Проекты</a>
+      <a data-nav="services">Услуги</a>
+      <a data-nav="contacts">Контакты</a>
+    </nav>
+    <div class="nav-right">
+      <button class="btn btn-primary" data-nav="constructor">Конструктор проектов</button>
+      <button class="burger" id="burger" aria-label="Меню"><span></span></button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ ГЛАВНАЯ ============ -->
+<section class="page active" id="home">
+  <div class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="eyebrow"><span class="num">01</span> Студия веб-разработки в Москве</span>
+        <h1>Сайты и веб-приложения, что работают на <span class="accent">бизнес</span></h1>
+        <p class="lead">Полный цикл — от исследования и дизайна до запуска и поддержки. Прозрачные сроки, фиксированная цена, своя команда в штате.</p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" data-nav="contacts">Заказать звонок</button>
+          <button class="btn btn-outline" data-nav="constructor">Конструктор проектов <span class="arr">→</span></button>
+        </div>
+        <div class="hero-meta">
+          <div class="m"><b>4.8 / 5</b><span>оценка пользователей</span></div>
+          <div class="divider"></div>
+          <div class="m"><b>62%</b><span>конверсия</span></div>
+        </div>
+      </div>
+      <div class="mock">
+        <div class="mock-bar"><i></i><i></i><i></i></div>
+        <div class="ph"><div class="ph-in">{{ICON_IMG}}<span>Превью проекта 960×540</span></div></div>
+        <div class="float-chip tl">4.8 / 5<span>оценка</span></div>
+        <div class="float-chip bl">62%<span>конверсия</span></div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="stats-dark">
+        <div class="s"><b>200+</b><span>запущенных проектов с 2017 года</span></div>
+        <div class="s"><b>8 лет</b><span>на рынке веб-разработки</span></div>
+        <div class="s"><b>40+</b><span>постоянных клиентов на поддержке</span></div>
+        <div class="s"><b>98%</b><span>проектов продлевают сотрудничество</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="sec-head row">
+        <div>
+          <span class="eyebrow"><span class="num">02</span> Услуги</span>
+          <h2>Что мы делаем</h2>
+          <p>Отдельные этапы или полный цикл под ключ. Подходящий пакет соберём после короткого брифа.</p>
+        </div>
+        <button class="btn btn-ghost" data-nav="services">Все услуги <span class="arr">→</span></button>
+      </div>
+      <div class="grid g3">
+        <div class="card hover"><div class="ico">{{ICON_PEN}}</div><h3>Дизайн</h3><p class="desc">Исследование, прототипы, UI-кит и дизайн-система под ваш продукт.</p></div>
+        <div class="card hover"><div class="ico">{{ICON_CODE}}</div><h3>Разработка</h3><p class="desc">Сайты, веб-приложения и магазины. Фронтенд, бэкенд, интеграции.</p></div>
+        <div class="card hover"><div class="ico">{{ICON_LIFE}}</div><h3>Поддержка</h3><p class="desc">Развитие, мониторинг и доработки после запуска. Свои в штате.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <div class="container">
+      <div class="sec-head"><span class="eyebrow"><span class="num">03</span> Технологии</span><h2>Наш технологический стек</h2><p>Берём проверенные инструменты — те, на которых проект потом легко поддерживать любой команде.</p></div>
+      <div class="grid g3 tech">
+        <div class="card"><h3>Front-end</h3><p class="desc">Интерфейсы, которые приятно использовать. Адаптивная вёрстка, анимация, скорость.</p><div class="tags"><span class="tag">JavaScript</span><span class="tag">React</span><span class="tag">Vue</span><span class="tag">Next.js</span></div><span class="linklike">Подробнее →</span></div>
+        <div class="card"><h3>Back-end</h3><p class="desc">Надёжная логика под капотом. API, базы данных, интеграции, высокие нагрузки.</p><div class="tags"><span class="tag">Node.js</span><span class="tag">PostgreSQL</span><span class="tag">1С</span><span class="tag">REST</span></div><span class="linklike">Подробнее →</span></div>
+        <div class="card"><h3>Дизайн</h3><p class="desc">Дизайн, который продаёт. UX-исследование, прототипы и фирменный стиль.</p><div class="tags"><span class="tag">Figma</span><span class="tag">UI-kit</span><span class="tag">Прототип</span></div><span class="linklike">Подробнее →</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="sec-head"><span class="eyebrow"><span class="num">04</span> Процесс</span><h2>Как мы работаем</h2><p>Прозрачный процесс с фиксированными дедлайнами и согласованием на каждом этапе.</p></div>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><h4>Брифинг</h4><p>Изучаем задачу, цели и аудиторию. Фиксируем требования.</p></div>
+        <div class="step"><div class="n">2</div><h4>Дизайн</h4><p>Прототип, интерфейсы и согласование макетов.</p></div>
+        <div class="step"><div class="n">3</div><h4>Разработка</h4><p>Вёрстка, фронт, бэк и интеграции с документацией.</p></div>
+        <div class="step"><div class="n">4</div><h4>Тестирование</h4><p>Проверяем на устройствах, нагрузке и сценариях.</p></div>
+        <div class="step"><div class="n">5</div><h4>Запуск</h4><p>Публикуем, обучаем команду, берём на поддержку.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <div class="container">
+      <div class="sec-head row">
+        <div><span class="eyebrow"><span class="num">05</span> Проекты</span><h2>Свежие кейсы</h2><p>Каждый проект — с конкретным результатом для бизнеса.</p></div>
+        <button class="btn btn-ghost" data-nav="projects">Все работы <span class="arr">→</span></button>
+      </div>
+      <div class="grid g3" id="home-cases"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="sec-head"><span class="eyebrow"><span class="num">06</span> Преимущества</span><h2>Почему с нами</h2><p>Шесть причин, по которым клиенты возвращаются и рекомендуют дальше.</p></div>
+      <div class="adv">
+        <div class="a"><div class="n">01</div><h4>Бриф</h4><p>Созваниваемся, разбираем задачу, цели и ограничения. Без воды.</p></div>
+        <div class="a"><div class="n">02</div><h4>Исследование</h4><p>Анализ ниши, конкурентов и пользователей. Прорабатываем структуру.</p></div>
+        <div class="a"><div class="n">03</div><h4>Дизайн</h4><p>Прототипы, UI и дизайн-система. Согласуем до строчки кода.</p></div>
+        <div class="a"><div class="n">04</div><h4>Разработка</h4><p>Вёрстка, фронтенд и бэкенд, интеграции. Прозрачные спринты.</p></div>
+        <div class="a"><div class="n">05</div><h4>Запуск</h4><p>Тестирование, перенос на прод, аналитика и обучение команды.</p></div>
+        <div class="a"><div class="n">06</div><h4>Поддержка</h4><p>Развитие, мониторинг и доработки. Своя команда в штате.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section alt">
+    <div class="container">
+      <div class="sec-head"><span class="eyebrow"><span class="num">07</span> Отзывы</span><h2>Что говорят клиенты</h2><p>Несколько отзывов от команд, с которыми мы продолжаем работать.</p></div>
+      <div class="grid g3" id="reviews"></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="container">
+      <div class="sec-head"><span class="eyebrow"><span class="num">08</span> Вопрос-ответ</span><h2>Частые вопросы</h2><p>Коротко о цене, сроках и формате работы. Не нашли ответ — спросите в форме ниже.</p></div>
+      <div class="faq" id="faq"></div>
+    </div>
+  </div>
+
+  <div class="section tight"><div class="container">{{CONSTRUCTOR_CTA}}</div></div>
+  <div class="section alt" id="home-contact">{{CONTACT_SECTION}}</div>
+</section>
+
+<!-- ============ УСЛУГИ ============ -->
+<section class="page" id="services">
+  <div class="section">
+    <div class="container">
+      <span class="eyebrow">Услуги</span>
+      <div class="sec-head"><h2>От лендинга до сложной <span class="accent">системы</span></h2><p>Делаем отдельными этапами или собираем полный цикл под ключ. Цены и сроки фиксируем в договоре до старта — никаких сюрпризов в процессе.</p></div>
+      <div class="stats-row">
+        <div class="s"><b>40 000 ₽</b><span>начальная цена за проект</span></div>
+        <div class="s"><b>3 вида</b><span>направления разработки</span></div>
+        <div class="s"><b>9</b><span>пакетов услуг</span></div>
+        <div class="s"><b>от 2 недель</b><span>запуск проекта</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="section tight"><div class="container">{{CONSTRUCTOR_CTA}}</div></div>
+  <div class="section">
+    <div class="container">
+      <div class="sec-head row">
+        <div><span class="eyebrow accent">Все услуги</span><h2>Девять пакетов на разные задачи</h2><p>Выбирайте по типу или по бюджету.</p></div>
+        <button class="btn btn-outline">Загрузить прайс-лист (PDF)</button>
+      </div>
+      <div class="filters" data-filter="svc">
+        <button class="chip active" data-cat="all">Все <span class="c">9</span></button>
+        <button class="chip" data-cat="dev">Разработка <span class="c">3</span></button>
+        <button class="chip" data-cat="design">Дизайн <span class="c">2</span></button>
+        <button class="chip" data-cat="complex">Комплекс <span class="c">2</span></button>
+        <button class="chip" data-cat="support">Поддержка <span class="c">1</span></button>
+        <button class="chip" data-cat="revision">Доработка <span class="c">1</span></button>
+      </div>
+      <div class="grid g3" id="services-grid"></div>
+    </div>
+  </div>
+  <div class="section alt">{{CONTACT_SECTION}}</div>
+</section>
+
+<!-- ============ ПРОЕКТЫ ============ -->
+<section class="page" id="projects">
+  <div class="section">
+    <div class="container">
+      <span class="eyebrow">Портфолио</span>
+      <div class="sec-head"><h2>Работы, которыми мы <span class="accent">гордимся</span></h2><p>Сайты, магазины и приложения, которые мы запустили с 2017 года. Каждый проект — со ссылкой на живой сайт, тех-стеком и кейсом.</p></div>
+      <div class="stats-row">
+        <div class="s"><b>200+</b><span>запущенных проектов с 2017 года</span></div>
+        <div class="s"><b>8 лет</b><span>на рынке веб-разработки</span></div>
+        <div class="s"><b>40+</b><span>постоянных клиентов на поддержке</span></div>
+        <div class="s"><b>98%</b><span>проектов продлевают сотрудничество</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="section tight"><div class="container">{{CONSTRUCTOR_CTA}}</div></div>
+  <div class="section">
+    <div class="container">
+      <div class="sec-head"><span class="eyebrow accent">Все проекты</span><h2>Более 20 проектов разной сложности</h2><p>Проекты отличаются стеком разработки и задачами бизнеса.</p></div>
+      <div class="filters" data-filter="proj">
+        <button class="chip active" data-cat="all">Все</button>
+        <button class="chip" data-cat="corp">Корпоративные</button>
+        <button class="chip" data-cat="app">Веб-приложение</button>
+        <button class="chip" data-cat="edu">Образовательные</button>
+        <button class="chip" data-cat="shop">Магазины</button>
+      </div>
+      <div class="grid" id="projects-grid" style="gap:16px"></div>
+      <div style="text-align:center;margin-top:28px"><button class="btn btn-ghost">Загрузить ещё</button></div>
+    </div>
+  </div>
+  <div class="section alt">{{CONTACT_SECTION}}</div>
+</section>
+
+<!-- ============ КОНТАКТЫ ============ -->
+<section class="page" id="contacts">
+  <div class="section">
+    <div class="container">
+      <span class="eyebrow">Контакты</span>
+      <div class="sec-head"><h2>Выберите удобный <span class="accent">канал связи</span></h2><p>Звонок, письмо, Telegram или встреча в офисе — ответим на любом канале. Чаще всего быстрее всего через Telegram, в среднем за час.</p></div>
+      <div class="stats-row">
+        <div class="s"><b>1 час</b><span>время отклика в Telegram</span></div>
+        <div class="s"><b>Пн–Пт</b><span>рабочий график</span></div>
+        <div class="s"><b>10:00–20:00</b><span>рабочие часы</span></div>
+        <div class="s"><b>100%</b><span>шанс ответа на ваш отклик</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="sec-head row"><div><h2>Связь с нами</h2><p>Все указанные способы связи рабочие — выбирайте любой.</p></div><button class="btn btn-outline">Загрузить контакты (PDF)</button></div>
+      <div class="grid g2" style="align-items:start">
+        <div class="channels">
+          <div class="channel"><div class="ic">{{ICON_PHONE}}</div><div><div class="k">Телефон</div><b>+7 (999) 999-99-99</b><small>Будни, с 10:00 до 20:00</small></div></div>
+          <div class="channel"><div class="ic">{{ICON_MAIL}}</div><div><div class="k">Почта</div><b>hello@webdesign.ru</b><small>В течение рабочего дня</small></div></div>
+          <div class="channel"><div class="ic">{{ICON_SEND}}</div><div><div class="k">Телеграм</div><b>@lvlup_studio</b><small>В течение часа</small></div></div>
+          <div class="channel"><div class="ic">{{ICON_PIN}}</div><div><div class="k">Офис</div><b>Москва, ул. Покровка, 19</b><small>Этаж 4, по предварительной записи</small></div></div>
+        </div>
+        <div class="map"><div class="ph"><div class="ph-in">{{ICON_MAP}}<span>Карта проезда</span></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section alt">
+    <div class="container">
+      <div class="sec-head"><h2>Наша команда</h2><p>Все в штате, без подрядчиков. Пишите напрямую тому, чья роль ближе к вашей задаче.</p></div>
+      <div class="grid g3" id="team"></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="sec-head row"><div><h2>Реквизиты организации</h2><p>ООО «ВЕБ-ДЕЗИГН»</p></div><button class="btn btn-outline">Загрузить реквизиты (PDF)</button></div>
+      <div class="req">
+        <div class="f"><div class="k">ИНН</div><b>7707083893</b></div>
+        <div class="f"><div class="k">Банк</div><b>ПАО «Сбербанк России»</b></div>
+        <div class="f"><div class="k">КПП</div><b>770701001</b></div>
+        <div class="f"><div class="k">Расчётный счёт</div><b>40702810500000012345</b></div>
+        <div class="f"><div class="k">ОГРН</div><b>1027700132195</b></div>
+        <div class="f"><div class="k">Корр. счёт</div><b>30101810400000000225</b></div>
+        <div class="f"><div class="k">Юридический адрес</div><b>125009, Москва, ул. Тверская, д. 12, помещ. 405</b></div>
+        <div class="f"><div class="k">БИК</div><b>044525225</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="section alt">{{CONTACT_SECTION}}</div>
+</section>
+
+<!-- ============ КОНСТРУКТОР ============ -->
+<section class="page" id="constructor">
+  <div class="section">
+    <div class="container">
+      <span class="eyebrow">Конструктор проектов</span>
+      <div class="sec-head"><h2>Соберите <span class="accent">свой проект</span> сами</h2><p>Выбирайте основу и нужные именно вам элементы — цена и срок разработки обновляются вместе с выбором. Готовую конфигурацию можно сразу отправить нам и заказать обратный звонок.</p></div>
+      <div class="stats-row">
+        <div class="s"><b>5 типов</b><span>проектов в основе</span></div>
+        <div class="s"><b>14 элементов</b><span>на выбор под задачу</span></div>
+        <div class="s"><b>100%</b><span>гарантия соответствия цены</span></div>
+        <div class="s"><b>0 ₽</b><span>за консультацию и смету</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="section tight">
+    <div class="container">
+      <div class="sec-head"><h2>Как работает конструктор</h2><p>Три шага — и у вас готовая смета с фиксированной ценой по договору.</p></div>
+      <div class="howto">
+        <div class="h"><div class="n">01</div><h4>Выберите основу и элементы</h4><p>Тип проекта, объём, дизайн и остальные нужные функции.</p></div>
+        <div class="h"><div class="n">02</div><h4>Смотрите расчёт вживую</h4><p>Цена и срок пересчитываются при каждом изменении.</p></div>
+        <div class="h"><div class="n">03</div><h4>Закажите звонок</h4><p>Конфигурация сохраняется и уходит нам вместе с заявкой.</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="sec-head"><h2>Соберите проект</h2><p>Начните с готовой сборки или настройте всё с нуля.</p></div>
+      <div style="font-size:13px;font-weight:700;color:var(--muted);margin-bottom:10px">Готовые предложения:</div>
+      <div class="presets" id="presets"></div>
+      <div class="builder">
+        <div class="builder-left">
+          <div class="bcard">
+            <div class="bhead"><span class="bn">1</span><h4>Тип проекта</h4><small>выберите тип проекта</small></div>
+            <div class="opts" id="opt-type"></div>
+          </div>
+          <div class="bcard">
+            <div class="bhead"><span class="bn">2</span><h4>Объём</h4><small>минимум 1 страница</small></div>
+            <div class="range-wrap">
+              <input type="range" id="pages" min="1" max="20" value="5" />
+              <div class="range-val"><span id="pages-val">5</span> страниц<br><span id="pages-extra"></span></div>
+            </div>
+          </div>
+          <div class="bcard">
+            <div class="bhead"><span class="bn">3</span><h4>Дизайн</h4></div>
+            <div class="opts" style="grid-template-columns:repeat(2,1fr)" id="opt-design"></div>
+          </div>
+          <div class="bcard">
+            <div class="bhead"><span class="bn">4</span><h4>Элементы и функции</h4><small>можно несколько</small></div>
+            <div class="checks" id="opt-elements"></div>
+          </div>
+          <div class="bcard">
+            <div class="bhead"><span class="bn">5</span><h4>Поддержка после запуска</h4></div>
+            <div class="opts" id="opt-support"></div>
+          </div>
+        </div>
+        <aside class="summary">
+          <h4>Ваша конфигурация</h4>
+          <div id="sum-lines"></div>
+          <div class="sum-term"><span>Срок работ:</span><b id="sum-term">2–3 недели</b></div>
+          <div class="sum-total"><span>Итого:</span><b id="sum-total">от 0 ₽</b></div>
+          <button class="btn btn-primary" style="width:100%" data-nav="contacts">Заказать звонок</button>
+          <p class="note">Расчёт предварительный. Финальную смету и договор подготовим после звонка.</p>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ПОЛЬЗОВАТЕЛЬСКОЕ СОГЛАШЕНИЕ ============ -->
+<section class="page" id="agreement">
+  <div class="section">
+    <div class="container">
+      <span class="eyebrow">Пользовательское соглашение</span>
+      <div class="sec-head"><h2>Наше пользовательское соглашение</h2><p>Условия, на которых студия выполняет работы, а клиент пользуется результатами. Документ регулирует все договоры, заключённые после даты обновления.</p></div>
+      <div class="hero-cta"><button class="btn btn-primary" data-nav="contacts">Задать вопрос</button><button class="btn btn-outline">Загрузить соглашение (PDF)</button></div>
+    </div>
+  </div>
+  <div class="section alt">
+    <div class="container legal">
+      <nav class="legal-nav" id="legal-nav">
+        <div class="lh">Навигация</div>
+        <a class="active" data-sec="s1">Общие положения</a>
+        <a data-sec="s2">Термины и определения</a>
+        <a data-sec="s3">Предмет соглашения</a>
+        <a data-sec="s4">Стоимость и оплата</a>
+        <a data-sec="s5">Сроки и порядок работ</a>
+        <a data-sec="s6">Передача прав</a>
+        <a data-sec="s7">Конфиденциальность</a>
+        <a data-sec="s8">Персональные данные</a>
+        <a data-sec="s9">Ответственность сторон</a>
+        <a data-sec="s10">Реквизиты студии</a>
+      </nav>
+      <div class="legal-body">
+        <h3 id="s1">1. Общие положения</h3>
+        <p>1.1. Настоящее соглашение определяет условия, на которых студия выполняет работы, а клиент пользуется результатами. Документ регулирует все договоры, заключённые после даты обновления.</p>
+        <p>1.2. Использование услуг студии означает согласие клиента с условиями настоящего соглашения в полном объёме.</p>
+        <div class="note"><b>Примечание.</b> Студия вправе обновлять соглашение. Действующая редакция всегда опубликована на этой странице, к договору применяется редакция, действующая на дату его заключения.</div>
+        <div class="divider"></div>
+        <h3 id="s2">2. Термины и определения</h3>
+        <p>2.1. Студия — исполнитель, оказывающий услуги по разработке и сопровождению сайтов и веб-приложений. Клиент — заказчик услуг. Результат — сайт, приложение или иной материал, переданный клиенту.</p>
+        <h3 id="s3">3. Предмет соглашения</h3>
+        <p>3.1. Студия обязуется выполнить работы по проектированию, разработке и поддержке веб-продукта в объёме, согласованном сторонами в договоре или смете конструктора проектов.</p>
+        <ul><li>проектирование и дизайн интерфейса;</li><li>вёрстка и разработка функциональности;</li><li>тестирование и запуск;</li><li>поддержка и доработки по отдельному соглашению.</li></ul>
+        <h3 id="s4">4. Стоимость и оплата</h3>
+        <p>4.1. Стоимость работ фиксируется в договоре до старта и не изменяется в одностороннем порядке. Предварительный расчёт доступен в конструкторе проектов.</p>
+        <h3 id="s5">5. Сроки и порядок работ</h3>
+        <p>5.1. Сроки согласуются на этапе брифинга и фиксируются в договоре. Работы ведутся этапами с согласованием результата на каждом этапе.</p>
+        <h3 id="s6">6. Передача прав</h3>
+        <p>6.1. Исключительные права на результат переходят клиенту после полной оплаты, если иное не предусмотрено договором.</p>
+        <h3 id="s7">7. Конфиденциальность</h3>
+        <p>7.1. Стороны обязуются не разглашать полученную в ходе сотрудничества информацию третьим лицам без письменного согласия другой стороны.</p>
+        <h3 id="s8">8. Персональные данные</h3>
+        <p>8.1. Студия обрабатывает персональные данные, переданные через формы сайта, исключительно для связи с клиентом и в соответствии с законодательством о персональных данных.</p>
+        <h3 id="s9">9. Ответственность сторон</h3>
+        <p>9.1. Стороны несут ответственность за неисполнение обязательств в соответствии с действующим законодательством и условиями договора.</p>
+        <div class="divider"></div>
+        <h3 id="s10">10. Реквизиты студии</h3>
+        <p>ООО «ВЕБ-ДЕЗИГН». Юридический адрес: 125009, Москва, ул. Тверская, д. 12, помещ. 405.<br>ИНН 7707083893, КПП 770701001, ОГРН 1027700132195.<br>Контактная почта: hello@webdesign.ru. Телефон: +7 (999) 999-99-99.</p>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="container">
+      <div class="cta-band"><div><h3>Остались вопросы?</h3><p>Если вас что-то не устраивает или вы нашли ошибку — напишите, обсудим и объясним.</p></div><button class="btn btn-primary" data-nav="contacts">Написать нам</button></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" data-nav="home"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l8 5v8l-8 5-8-5V8l8-5z" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 14l4-4 4 4" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><b>LVL UP</b><span>Studio</span></span></a>
+        <p>Делаем сайты, веб-приложения и магазины с 2017 года.</p>
+      </div>
+      <div class="foot-col"><h5>Проекты</h5><a data-nav="projects">Дизайн</a><a data-nav="projects">Разработка</a><a data-nav="projects">Все кейсы</a></div>
+      <div class="foot-col"><h5>Услуги</h5><a data-nav="services">Комплекс услуг</a><a data-nav="services">Дизайн</a><a data-nav="services">Разработка</a><a data-nav="services">Поддержка</a></div>
+      <div class="foot-col"><h5>Навигация</h5><a data-nav="home">Главная</a><a data-nav="projects">Проекты</a><a data-nav="contacts">Контакты</a><a data-nav="constructor">Конструктор проектов</a></div>
+    </div>
+    <div class="foot-bottom"><span>© 2026 Web-design. Все права защищены.</span><a data-nav="agreement">Пользовательское соглашение</a></div>
+  </div>
+</footer>
+
+<script>
+/* ===== ИКОНКИ (инлайн SVG) ===== */
+const I = {
+  img:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5L5 21" stroke-linecap="round"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3 0 0-3z"/><path d="M18 13l-1.5-1.5"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
+  code:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>',
+  life:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M5 5l4 4M15 15l4 4M19 5l-4 4M9 15l-4 4"/></svg>',
+  phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h4l2 5-3 2a14 14 0 006 6l2-3 5 2v4a2 2 0 01-2 2A17 17 0 013 6a2 2 0 012-2z"/></svg>',
+  mail:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 7l8 6 8-6"/></svg>',
+  send:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M22 3L11 14M22 3l-7 18-4-7-7-4 18-7z"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s7-5.5 7-11a7 7 0 10-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>',
+  map:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>',
+  grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+};
+function fillIcons(){
+  const map={'{{ICON_IMG}}':I.img,'{{ICON_PEN}}':I.pen,'{{ICON_CODE}}':I.code,'{{ICON_LIFE}}':I.life,'{{ICON_PHONE}}':I.phone,'{{ICON_MAIL}}':I.mail,'{{ICON_SEND}}':I.send,'{{ICON_PIN}}':I.pin,'{{ICON_MAP}}':I.map};
+  document.body.innerHTML=document.body.innerHTML; // no-op guard
+}
+
+/* ===== ШАБЛОНЫ (CTA конструктора и форма) ===== */
+const constructorCTA = `
+<div class="cta-band">
+  <div><h3>У нас есть конструктор проектов!</h3><p>Соберите свой проект сами: выбирайте детали и элементы, цена и срок обновляются вместе с вашим выбором. После расчёта закажите обратный звонок с сохранённой конфигурацией.</p></div>
+  <button class="btn btn-primary" data-nav="constructor">Рассчитать проект <span class="arr">→</span></button>
+</div>`;
+
+const contactSection = `
+<div class="container">
+  <span class="eyebrow accent">Связаться с нами</span>
+  <div class="sec-head"><h2>Остались <span class="accent">вопросы?</span></h2><p>Заполните короткую анкету — ответим в течение рабочего дня и предложим решение под задачу.</p></div>
+  <div class="contact-grid">
+    <div class="form-aside">
+      <div class="perk">${I.check}<span>Отвечаем в течение часа в Telegram</span></div>
+      <div class="perk">${I.check}<span>Бесплатная консультация и смета</span></div>
+      <div class="perk">${I.check}<span>Договор и фиксированная цена</span></div>
+    </div>
+    <form class="form" novalidate>
+      <div class="form-ok">Спасибо! Заявка отправлена — свяжемся в течение рабочего дня.</div>
+      <div class="row2">
+        <div class="field"><label>ФИО</label><input name="name" placeholder="Иванов Иван Иванович" required /><div class="err">Укажите, как к вам обращаться</div></div>
+        <div class="field"><label>Почта</label><input name="email" type="email" placeholder="example@mail.com" required /><div class="err">Введите корректный e-mail</div></div>
+      </div>
+      <div class="field"><label>Телефон</label><input name="phone" placeholder="+7" required /><div class="err">Укажите телефон для связи</div></div>
+      <div class="field"><label>Тип вопроса</label>
+        <div class="types">
+          <label><input type="radio" name="topic" value="Безопасность"/><span>Безопасность</span></label>
+          <label><input type="radio" name="topic" value="Оплата"/><span>Способы оплаты</span></label>
+          <label><input type="radio" name="topic" value="Гарантии"/><span>Гарантии</span></label>
+          <label><input type="radio" name="topic" value="Всё сразу" checked/><span>Всё и сразу</span></label>
+        </div>
+      </div>
+      <div class="field"><label>Комментарий</label><textarea name="comment" placeholder="Расскажите о задаче — что нужно сделать и в какие сроки"></textarea></div>
+      <label class="consent"><input type="checkbox" required/><span>Нажимая на кнопку, вы соглашаетесь с политикой конфиденциальности и обработкой персональных данных.</span></label>
+      <button type="submit" class="btn btn-primary" style="width:100%">Заказать звонок</button>
+    </form>
+  </div>
+</div>`;
+
+/* ===== ДАННЫЕ ===== */
+const cases=[
+  {cat:'ВЕБ-ПРИЛОЖЕНИЕ',title:'Сайт магазина ретро-товаров',desc:'Интерфейсы, которые приятно использовать.',tags:['Next.js','PostgreSQL','1С'],price:'100 000 ₽',term:'2 недели',c:'app'},
+  {cat:'КОРПОРАТИВНЫЙ',title:'Сайт инженерной компании',desc:'Многостраничный сайт с каталогом услуг.',tags:['React','Node.js','CMS'],price:'180 000 ₽',term:'4 недели',c:'corp'},
+  {cat:'МАГАЗИН',title:'Интернет-магазин одежды',desc:'Каталог, корзина и онлайн-оплата.',tags:['Next.js','PostgreSQL','API'],price:'260 000 ₽',term:'6 недель',c:'shop'},
+  {cat:'ОБРАЗОВАТЕЛЬНЫЙ',title:'Платформа онлайн-курсов',desc:'Личный кабинет, уроки и прогресс.',tags:['React','Node.js','Auth'],price:'320 000 ₽',term:'8 недель',c:'edu'},
+  {cat:'ВЕБ-ПРИЛОЖЕНИЕ',title:'Сервис бронирования услуг',desc:'Календарь, заявки и уведомления.',tags:['Vue','PostgreSQL','REST'],price:'240 000 ₽',term:'6 недель',c:'app'},
+];
+const reviews=[
+  {who:'Имя Фамилия',role:'Основатель компании',site:'project-one.ru'},
+  {who:'Имя Фамилия',role:'Маркетолог',site:'project-two.ru'},
+  {who:'Имя Фамилия',role:'Руководитель проекта',site:'project-three.ru'},
+];
+const faqs=[
+  ['Сколько стоит проект?','Стоимость зависит от типа и объёма. Предварительную смету можно собрать в конструкторе проектов за пару минут, финальную фиксируем в договоре.'],
+  ['Сколько времени занимает разработка?','От 2 недель для простых проектов. Точный срок зависит от объёма и набора функций — конструктор показывает ориентир сразу.'],
+  ['Вы работаете по договору?','Да. Все условия, сроки и стоимость фиксируем в договоре до старта работ.'],
+  ['Что с поддержкой после запуска?','Берём проект на поддержку: мониторинг, доработки и развитие. Свои специалисты в штате.'],
+  ['Можно доработать существующий сайт?','Да, есть отдельный пакет «Доработка». Сначала проведём аудит и оценим объём.'],
+];
+const team=[
+  {name:'Имя Фамилия',role:'Frontend-разработчик',desc:'Адаптивная вёрстка и интерфейсы на React/Next.js.',tags:['React','Next.js','CSS']},
+  {name:'Имя Фамилия',role:'Backend-разработчик',desc:'API, базы данных и интеграции, в том числе с 1С.',tags:['Node.js','PostgreSQL','1С']},
+  {name:'Имя Фамилия',role:'UI/UX-дизайнер',desc:'Прототипы, дизайн-система и фирменный стиль.',tags:['Figma','UI-kit','UX']},
+];
+const services=[
+  {cat:'РАЗРАБОТКА',c:'dev',ic:I.code,t:'',title:'Сайт-визитка',from:'от 40 000 ₽',term:'1–2 недели'},
+  {cat:'РАЗРАБОТКА',c:'dev',ic:I.code,t:'',title:'Корпоративный сайт',from:'от 120 000 ₽',term:'2–3 недели'},
+  {cat:'РАЗРАБОТКА',c:'dev',ic:I.code,t:'',title:'Интернет-магазин',from:'от 220 000 ₽',term:'4–6 недель'},
+  {cat:'КОМПЛЕКС',c:'complex',ic:I.grid,t:'t-complex',title:'Веб-приложение',from:'от 260 000 ₽',term:'6–8 недель'},
+  {cat:'ДИЗАЙН',c:'design',ic:I.pen,t:'t-design',title:'UI/UX дизайн сайта',from:'от 80 000 ₽',term:'2–3 недели'},
+  {cat:'ДИЗАЙН',c:'design',ic:I.pen,t:'t-design',title:'Прототипирование',from:'от 60 000 ₽',term:'1–2 недели'},
+  {cat:'КОМПЛЕКС',c:'complex',ic:I.grid,t:'t-complex',title:'Проект под ключ',from:'от 300 000 ₽',term:'8–10 недель'},
+  {cat:'ПОДДЕРЖКА',c:'support',ic:I.life,t:'t-support',title:'Поддержка продукта',from:'от 30 000 ₽/мес',term:'постоянно'},
+  {cat:'ДОРАБОТКА',c:'revision',ic:I.code,t:'t-revision',title:'Доработка существующего проекта',from:'от 40 000 ₽',term:'1–3 недели'},
+];
+const svcFeatures=['Отвечаем в течение часа в Telegram','Бесплатная консультация и смета','Договор и фиксированная цена'];
+
+/* ===== РЕНДЕР СПИСКОВ ===== */
+const phThumb=(label,h)=>`<div class="ph thumb" style="${h?'height:'+h+'px':''}"><div class="ph-in">${I.img}<span>${label}</span></div></div>`;
+function render(){
+  // кейсы (главная)
+  document.getElementById('home-cases').innerHTML=cases.slice(0,3).map(p=>caseCard(p)).join('');
+  // отзывы
+  document.getElementById('reviews').innerHTML=reviews.map(r=>`
+    <div class="card review"><span class="site">${r.site} ↗</span>
+      <p class="quote">Интерфейсы, которые приятно использовать. Адаптивная вёрстка, анимация и скорость — всё на высоте, продолжаем работать.</p>
+      <div class="who"><div class="ph solid av"></div><div><b>${r.who}</b><span>${r.role}</span></div></div>
+    </div>`).join('');
+  // faq
+  document.getElementById('faq').innerHTML=faqs.map(([q,a])=>`
+    <div class="faq-item"><button class="faq-q">${q}<span class="pm">+</span></button><div class="faq-a"><p>${a}</p></div></div>`).join('');
+  // команда
+  document.getElementById('team').innerHTML=team.map(m=>`
+    <div class="card team-card"><div class="ph solid av"></div><h4>${m.name}</h4><div class="role">${m.role}</div><p>${m.desc}</p>
+      <div class="tags">${m.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="socials"><a aria-label="mail">${I.mail}</a><a aria-label="tg">${I.send}</a><a aria-label="phone">${I.phone}</a></div>
+    </div>`).join('');
+  // услуги
+  document.getElementById('services-grid').innerHTML=services.map(s=>`
+    <div class="card hover svc ${s.t}" data-cat="${s.c}">
+      <div class="top"><span class="cat">${s.cat}</span><span class="badge">${s.ic}</span></div>
+      <h3>${s.title}</h3><p class="desc">Интерфейсы, которые приятно использовать.</p>
+      <ul>${svcFeatures.map(f=>`<li>${I.check}${f}</li>`).join('')}</ul>
+      <div class="price"><b>${s.from}</b><span>${s.term}</span></div>
+    </div>`).join('');
+  // проекты
+  document.getElementById('projects-grid').innerHTML=cases.map(p=>`
+    <div class="card hover proj" data-cat="${p.c}">
+      ${phThumb('Превью 200×128')}
+      <div><span class="cat">${p.cat}</span><h3>${p.title}</h3><p class="desc">${p.desc}</p>
+      <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>
+      <div class="price"><b>${p.price}</b><span>${p.term}</span></div>
+    </div>`).join('');
+}
+const caseCard=p=>`
+  <div class="card hover proj" style="grid-template-columns:1fr;align-items:stretch" data-cat="${p.c}">
+    ${phThumb('Превью 360×200',180)}
+    <div style="margin-top:14px"><span class="cat">${p.cat}</span><h3>${p.title}</h3><p class="desc">${p.desc}</p>
+    <div class="tags">${p.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>
+    <div class="price" style="text-align:left;margin-top:6px"><b>${p.price}</b><span>${p.term}</span></div>
+  </div>`;
+
+/* ===== КОНСТРУКТОР: данные и логика ===== */
+const TYPES=[
+  {id:'dev',label:'Разработка',base:120000,weeks:2,ic:I.code},
+  {id:'design',label:'Дизайн',base:80000,weeks:2,ic:I.pen},
+  {id:'complex',label:'Комплекс',base:200000,weeks:3,ic:I.grid},
+  {id:'support',label:'Поддержка',base:40000,weeks:1,ic:I.life},
+  {id:'revision',label:'Доработка',base:40000,weeks:1,ic:I.code},
+];
+const DESIGNS=[{id:'template',label:'Шаблонный',price:40000},{id:'custom',label:'Индивидуальный',price:90000}];
+const SUPPORTS=[{id:'none',label:'Без поддержки',price:0},{id:'m1',label:'1 месяц',price:20000},{id:'m3',label:'3 месяца',price:50000},{id:'m6',label:'6 месяцев',price:90000}];
+const ELEMENTS=[
+  {id:'adaptive',label:'Адаптивная вёрстка',price:40000,g:'Базовое'},
+  {id:'forms',label:'Формы связи',price:30000,g:'Базовое'},
+  {id:'anim',label:'Анимации',price:40000,g:'Базовое'},
+  {id:'blog',label:'Блог / Новости',price:60000,g:'Контент'},
+  {id:'catalog',label:'Каталог товаров',price:90000,g:'Контент'},
+  {id:'copy',label:'Копирайтинг',price:40000,g:'Контент'},
+  {id:'cabinet',label:'Личный кабинет',price:80000,g:'Функционал'},
+  {id:'multilang',label:'Мультиязычность',price:50000,g:'Функционал'},
+  {id:'theme',label:'Тёмная / светлая темы',price:30000,g:'Функционал'},
+  {id:'pay',label:'Онлайн-оплата',price:90000,g:'Функционал'},
+  {id:'integr',label:'Интеграции',price:60000,g:'Функционал'},
+  {id:'admin',label:'Админ-панель',price:70000,g:'Функционал'},
+  {id:'seo',label:'SEO-оптимизация',price:50000,g:'Маркетинг'},
+  {id:'analytics',label:'Веб-аналитика',price:30000,g:'Маркетинг'},
+];
+const BASE_PAGES=5, PAGE_PRICE=10000;
+const PRESETS={
+  'Лендинг под ключ':{type:'complex',pages:3,design:'custom',elements:['adaptive','forms','anim','seo'],support:'m1'},
+  'Корпоративный сайт':{type:'dev',pages:6,design:'custom',elements:['adaptive','forms','blog','seo','analytics'],support:'m3'},
+  'Интернет-магазин':{type:'dev',pages:10,design:'custom',elements:['adaptive','forms','catalog','pay','seo'],support:'m3'},
+  'Веб-приложение':{type:'complex',pages:8,design:'custom',elements:['adaptive','forms','cabinet','admin','integr','theme'],support:'m6'},
+  'Сайт-визитка':{type:'dev',pages:1,design:'template',elements:['adaptive','forms'],support:'none'},
+};
+let cfg={type:'dev',pages:5,design:'custom',elements:['adaptive','forms'],support:'m1'};
+const rub=n=>n.toLocaleString('ru-RU')+' ₽';
+
+function buildConstructor(){
+  document.getElementById('opt-type').innerHTML=TYPES.map(t=>`<div class="opt" data-type="${t.id}"><div class="oi">${t.ic}</div><b>${t.label}</b><span>от ${rub(t.base)}</span></div>`).join('');
+  document.getElementById('opt-design').innerHTML=DESIGNS.map(d=>`<div class="opt" data-design="${d.id}"><b>${d.label}</b><span>+ ${rub(d.price)}</span></div>`).join('');
+  document.getElementById('opt-support').innerHTML=SUPPORTS.map(s=>`<div class="opt" data-support="${s.id}"><b>${s.label}</b><span>${s.price?'+ '+rub(s.price):'0 ₽'}</span></div>`).join('');
+  const groups=[...new Set(ELEMENTS.map(e=>e.g))];
+  document.getElementById('opt-elements').innerHTML=groups.map(g=>
+    `<div class="group-label">${g.toUpperCase()}</div>`+
+    ELEMENTS.filter(e=>e.g===g).map(e=>`<div class="check" data-el="${e.id}"><span class="box">${I.check}</span><span class="lbl">${e.label}</span><span class="pr">+ ${rub(e.price)}</span></div>`).join('')
+  ).join('');
+  document.getElementById('presets').innerHTML=Object.keys(PRESETS).map(p=>`<button class="chip" data-preset="${p}">${p}</button>`).join('');
+  // events
+  bindSel('opt-type','type','type');
+  bindSel('opt-design','design','design');
+  bindSel('opt-support','support','support');
+  document.querySelectorAll('#opt-elements .check').forEach(el=>el.addEventListener('click',()=>{
+    const id=el.dataset.el; const i=cfg.elements.indexOf(id);
+    if(i>=0)cfg.elements.splice(i,1); else cfg.elements.push(id);
+    syncConstructor();
+  }));
+  const pages=document.getElementById('pages');
+  pages.addEventListener('input',()=>{cfg.pages=+pages.value;syncConstructor();});
+  document.querySelectorAll('#presets .chip').forEach(c=>c.addEventListener('click',()=>{
+    cfg=JSON.parse(JSON.stringify(PRESETS[c.dataset.preset]));
+    document.getElementById('pages').value=cfg.pages;
+    document.querySelectorAll('#presets .chip').forEach(x=>x.classList.remove('active'));
+    c.classList.add('active');
+    syncConstructor();
+  }));
+  syncConstructor();
+}
+function bindSel(containerId,attr,key){
+  document.querySelectorAll('#'+containerId+' .opt').forEach(o=>o.addEventListener('click',()=>{cfg[key]=o.dataset[attr];syncConstructor();}));
+}
+function calc(){
+  const t=TYPES.find(x=>x.id===cfg.type);
+  let price=t.base;
+  const extra=Math.max(0,cfg.pages-BASE_PAGES);
+  price+=extra*PAGE_PRICE;
+  price+=(DESIGNS.find(d=>d.id===cfg.design)||{price:0}).price;
+  const els=ELEMENTS.filter(e=>cfg.elements.includes(e.id));
+  price+=els.reduce((s,e)=>s+e.price,0);
+  price+=(SUPPORTS.find(s=>s.id===cfg.support)||{price:0}).price;
+  let weeks=t.weeks+Math.ceil(extra/3)+Math.ceil(els.length/2)+(cfg.design==='custom'?1:0);
+  return {price,weeks,els};
+}
+function syncConstructor(){
+  document.querySelectorAll('#opt-type .opt').forEach(o=>o.classList.toggle('sel',o.dataset.type===cfg.type));
+  document.querySelectorAll('#opt-design .opt').forEach(o=>o.classList.toggle('sel',o.dataset.design===cfg.design));
+  document.querySelectorAll('#opt-support .opt').forEach(o=>o.classList.toggle('sel',o.dataset.support===cfg.support));
+  document.querySelectorAll('#opt-elements .check').forEach(o=>o.classList.toggle('sel',cfg.elements.includes(o.dataset.el)));
+  const extra=Math.max(0,cfg.pages-BASE_PAGES);
+  document.getElementById('pages-val').textContent=cfg.pages;
+  document.getElementById('pages-extra').textContent=extra>0?('+ '+extra+' × 10 000 ₽'):'входит в базовую стоимость';
+  const {price,weeks,els}=calc();
+  const t=TYPES.find(x=>x.id===cfg.type);
+  const d=DESIGNS.find(x=>x.id===cfg.design);
+  const s=SUPPORTS.find(x=>x.id===cfg.support);
+  document.getElementById('sum-lines').innerHTML=`
+    ${sumline('Тип проекта',t.label,rub(t.base))}
+    ${sumline('Объём',cfg.pages+' страниц',extra>0?rub(extra*PAGE_PRICE):'включено')}
+    ${sumline('Дизайн',d.label,'+ '+rub(d.price))}
+    ${sumline('Элементы',els.length+' шт.','+ '+rub(els.reduce((a,e)=>a+e.price,0)))}
+    ${sumline('Поддержка',s.label,s.price?'+ '+rub(s.price):'0 ₽')}`;
+  document.getElementById('sum-term').textContent=weeks+'–'+(weeks+1)+' недель';
+  document.getElementById('sum-total').textContent='от '+rub(price);
+}
+const sumline=(k,sub,v)=>`<div class="sumline"><div class="l"><b>${k}</b><span>${sub}</span></div><div class="v">${v}</div></div>`;
+
+/* ===== НАВИГАЦИЯ / РОУТЕР ===== */
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el=document.getElementById(page)||document.getElementById('home');
+  el.classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.dataset.nav===page));
+  document.getElementById('navlinks').classList.remove('open');
+  window.scrollTo({top:0,behavior:'instant'in window?'instant':'auto'});
+}
+document.addEventListener('click',e=>{
+  const nav=e.target.closest('[data-nav]');
+  if(nav){e.preventDefault();go(nav.dataset.nav);}
+});
+
+/* ===== ФИЛЬТРЫ ===== */
+function initFilters(){
+  document.querySelectorAll('[data-filter]').forEach(bar=>{
+    const grid=bar.parentElement.querySelector('.grid');
+    bar.addEventListener('click',e=>{
+      const chip=e.target.closest('.chip'); if(!chip)return;
+      bar.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      const cat=chip.dataset.cat;
+      grid.querySelectorAll('[data-cat]').forEach(card=>{
+        card.style.display=(cat==='all'||card.dataset.cat===cat)?'':'none';
+      });
+    });
+  });
+}
+
+/* ===== FAQ ===== */
+document.addEventListener('click',e=>{
+  const q=e.target.closest('.faq-q'); if(!q)return;
+  const item=q.parentElement;
+  const open=item.classList.contains('open');
+  item.classList.toggle('open');
+  const a=item.querySelector('.faq-a');
+  a.style.maxHeight=open?null:a.scrollHeight+'px';
+});
+
+/* ===== ВАЛИДАЦИЯ ФОРМ ===== */
+document.addEventListener('submit',e=>{
+  if(!e.target.classList.contains('form'))return;
+  e.preventDefault();
+  const f=e.target; let ok=true;
+  f.querySelectorAll('[required]').forEach(inp=>{
+    const field=inp.closest('.field');
+    let bad=!inp.value.trim();
+    if(inp.type==='email'&&inp.value&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(inp.value))bad=true;
+    if(inp.type==='checkbox')bad=!inp.checked;
+    if(field){field.classList.toggle('invalid',bad);}
+    if(bad)ok=false;
+  });
+  if(ok){f.reset();f.querySelector('.form-ok').style.display='block';f.querySelectorAll('.invalid').forEach(x=>x.classList.remove('invalid'));}
+});
+document.addEventListener('input',e=>{const fld=e.target.closest('.field.invalid');if(fld)fld.classList.remove('invalid');});
+
+/* ===== ИНИТ ===== */
+document.getElementById('burger').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('open'));
+document.querySelectorAll('#legal-nav a').forEach(a=>a.addEventListener('click',()=>{
+  document.querySelectorAll('#legal-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');
+  const el=document.getElementById(a.dataset.sec); if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+
+// заполнить плейсхолдеры иконок и шаблонов
+document.body.innerHTML=document.body.innerHTML
+  .split('{{ICON_IMG}}').join(I.img)
+  .split('{{ICON_PEN}}').join(I.pen)
+  .split('{{ICON_CODE}}').join(I.code)
+  .split('{{ICON_LIFE}}').join(I.life)
+  .split('{{ICON_PHONE}}').join(I.phone)
+  .split('{{ICON_MAIL}}').join(I.mail)
+  .split('{{ICON_SEND}}').join(I.send)
+  .split('{{ICON_PIN}}').join(I.pin)
+  .split('{{ICON_MAP}}').join(I.map)
+  .split('{{CONSTRUCTOR_CTA}}').join(constructorCTA)
+  .split('{{CONTACT_SECTION}}').join(contactSection);
+
+// после перерисовки DOM повторно навесить обработчики, которые были привязаны к конкретным узлам
+render();
+buildConstructor();
+initFilters();
+document.getElementById('burger').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('open'));
+document.querySelectorAll('#legal-nav a').forEach(a=>a.addEventListener('click',()=>{
+  document.querySelectorAll('#legal-nav a').forEach(x=>x.classList.remove('active'));a.classList.add('active');
+  const el=document.getElementById(a.dataset.sec); if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}));
+</script>
+</body>
+</html>
